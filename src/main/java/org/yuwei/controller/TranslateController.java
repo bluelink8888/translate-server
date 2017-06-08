@@ -18,6 +18,7 @@ public class TranslateController extends BaseController{
   @Autowired
   private TranslateService translateService;
   
+  
   @RequestMapping(value="/{target}", method=RequestMethod.GET, produces="application/json")
   public ResponseEntity<String> getUser(@PathVariable String target){
     

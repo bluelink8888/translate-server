@@ -1,8 +1,48 @@
 <html>
 <head>
+<meta charset="UTF-8">
 <title>Google-Translate</title>
+<link href="https://fonts.googleapis.com/css?family=Abel" rel="stylesheet">
+<style type="text/css">
+body, html{
+	height : 100%
+}
+body{
+	position : relative;
+	background : url(static/img/background.jpg) no-repeat 50%; 
+	background-size  : cover;
+	background-attachment : fixed;
+}
+#footer{
+    box-sizing: border-box;
+    position: fixed;
+    bottom: 0;
+    left : 0;
+    width: 100%;
+}
+#footer span{
+	font-family: 'Abel', sans-serif;
+	display : block;
+	height  : 40px;
+	line-height : 40px;
+	background-color: hsla(0,0%,100%,.7);
+}
+.text-center{
+	text-align: center;
+}
+
+</style>
+<script type="text/javascript" src="lib/js/jquery-2.1.4.min.js"></script>
 </head>
 <body>
-<h2>Hello World!</h2>
+<div>
+	<div></div>
+	<div></div>
+	<div id="footer" class="text-center">
+		<span>
+			Copyright © 2017 YuWei. All Right Reserved
+		</span>
+	</div>
+</div>
 </body>
 </html>

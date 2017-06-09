@@ -12,7 +12,6 @@ public class IndexController {
 
   @RequestMapping(value="index", method=RequestMethod.GET, produces="text/html")
   public String index(){
-    logger.info("index");
     return "index";
   }
   

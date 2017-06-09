@@ -1,0 +1,43 @@
+body, html{
+	height : 100%
+}
+body{
+	position : relative;
+	background : url(../../static/img/background.jpg) no-repeat 50%; 
+	background-size  : cover;
+	background-attachment : fixed;
+}
+#footer{
+    box-sizing: border-box;
+    position: fixed;
+    bottom: 0;
+    left : 0;
+    width: 100%;
+}
+#footer span{
+	font-family: 'Abel', sans-serif;
+	display : block;
+	height  : 40px;
+	line-height : 40px;
+	background-color: hsla(0,0%,100%,.7);
+}
+.container{
+	margin-right: auto;
+    margin-left: auto;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding : 30px 10px 30px 10px;	
+}
+.logo{
+	margin : 0 auto;
+}
+.logoImg{
+	background-image : url(../../static/img/logo.png);
+	opacity: 1;
+	margin : 0 auto;
+	width:200px;
+	height:90px;
+}
+.text-center{
+	text-align: center;
+}

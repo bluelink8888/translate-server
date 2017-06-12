@@ -2,7 +2,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Google-Translate</title>
-<link href="https://fonts.googleapis.com/css?family=Abel" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Abel|Roboto" rel="stylesheet">
 <link href="lib/css/index.css" rel="stylesheet">
 <script type="text/javascript" src="lib/js/jquery-2.1.4.min.js"></script>
 </head>
@@ -13,11 +13,11 @@
 	</div>
 	<div class="input">
 		<div class="inputText">
-			<textarea rows="1"></textarea>
+			<textarea id="input" rows="1" placeholder="Please type English"></textarea>
 		</div>
 	</div>
 	<div class="result">
-		<div class="text-center" style="">測試</div>
+		<div id="resultContent" class="text-center hidden" style=""></div>
 	</div>
 	<div id="footer" class="text-center">
 		<span>
@@ -25,5 +25,35 @@
 		</span>
 	</div>
 </div>
+<script type="text/javascript">
+var xhr = null;
+
+$("#input").on("keyup", function(){
+	var data = $(this).val();
+	if(data.length !=0 && data.length > 1){
+		goAjax(data);		
+	}else{
+		$("#resultContent").addClass('hidden');
+	}
+})
+
+function goAjax(data){
+	if(xhr!=null){
+		xhr.abort();
+		xhr = null;
+	}
+	xhr = $.ajax({
+		type : "GET",
+		url : "translate/" + data,
+		success : function(res){
+			console.log(res.body.result);
+			$("#resultContent").text(res.body.result);
+		},
+		complete : function(){
+			$("#resultContent").removeClass('hidden');
+		}
+	})	
+}
+</script>
 </body>
 </html>

@@ -7,6 +7,12 @@ import java.util.List;
 import org.apache.http.client.ClientProtocolException;
 import org.springframework.stereotype.Component;
 
+/**
+ * Implements google translate token generate function
+ * 
+ * @author YuWeiHung
+ * @see <a href="https://github.com/Stichoza/google-translate-php/issues/32">Reference</a>
+ */
 @Component
 public class TokenImpl extends Token {
 
@@ -14,6 +20,9 @@ public class TokenImpl extends Token {
     super();
   }
 
+  /**
+   * This method is main function generate token 
+   */
   @Override
   public String getToken(String t) {
 

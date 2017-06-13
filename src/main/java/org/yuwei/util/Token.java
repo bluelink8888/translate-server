@@ -14,16 +14,30 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.HttpClientBuilder;
 
+/**
+ * This for have get token needed
+ * @author YuWeiHung
+ *
+ */
 public abstract class Token {
 
+  // google translate page url
   private String googleUrl = "https://translate.google.com.tw/";
 
   private List<Long> tkArray;
 
   public Token() throws ClientProtocolException, IOException {
+    // Design got this param when server start up 
     tkArray = this.getGoogleArray();
   }
 
+  /**
+   * This method is get generate token need init param
+   * 
+   * @return
+   * @throws ClientProtocolException
+   * @throws IOException
+   */
   private List<Long> getGoogleArray() throws ClientProtocolException,
       IOException {
 

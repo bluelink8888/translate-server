@@ -18,7 +18,11 @@ public class TranslateController extends BaseController{
   @Autowired
   private TranslateService translateService;
   
-  
+  /**
+   * According user input to translate, only for English to Chinese for now
+   * @param target
+   * @return
+   */
   @RequestMapping(value="/{target}", method=RequestMethod.GET, produces="application/json")
   public ResponseEntity<String> getUser(@PathVariable String target){
     

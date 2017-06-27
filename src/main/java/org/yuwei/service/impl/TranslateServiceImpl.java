@@ -15,6 +15,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.yuwei.model.TranslateVo;
+import org.yuwei.param.Language;
 import org.yuwei.service.TranslateService;
 import org.yuwei.util.TokenImpl;
 
@@ -27,14 +28,20 @@ public class TranslateServiceImpl implements TranslateService{
   private TokenImpl token;
   
   @Override
-  public TranslateVo getTranslateResult(String target) {
+  public TranslateVo getTranslateResult(String target, String sl, String tl) {
     
     String result = "";
     String googleUrl = "";
     
+    /**
+     * sl means user input language 
+     * tl is user choose want to translate which language
+     */
     try {
-      googleUrl = "https://translate.google.com.tw/translate_a/single?"
-          + "client=t&sl=en&tl=" + translateLanguage + "&hl=" + translateLanguage
+      googleUrl = "https://translate.google.com.tw/translate_a/single?client=t&"
+          + "sl=" + sl + "&" 
+          + "tl=" + tl + "&"  
+          + "hl=" + Language.TRADITIONAL_CHINESE.getValue()
           + "&dt=at&dt=bd&dt=ex&dt=ld&dt=md&dt=qca&dt=rw&dt=rm&dt=ss&dt=t"
           + "&ie=" + encodeType + "&oe=" + encodeType
           + "&swap=1&source=btn&ssel=5&tsel=5&kc=0"
@@ -48,7 +55,7 @@ public class TranslateServiceImpl implements TranslateService{
 
     try {
       HttpResponse resp = client.execute(req);
-      resp.addHeader("Content-Type", "application/json; charset=UTF-8");
+      resp.addHeader("Content-Type", contenType);
       if (resp.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
         HttpEntity entity = resp.getEntity();
         BufferedReader bf = new BufferedReader(new InputStreamReader(
@@ -60,7 +67,7 @@ public class TranslateServiceImpl implements TranslateService{
         }
         result = sb.toString();
       }else{
-        logger.warn("failure");
+        // logger.warn("failure");
       }
     } catch (Exception e) {
       logger.error(e);
@@ -69,7 +76,6 @@ public class TranslateServiceImpl implements TranslateService{
     TranslateVo translateVo = new TranslateVo();
     translateVo.setTarget(target);
     translateVo.setResult(this.getformatResult(result));
-    
     return translateVo;
   }
 

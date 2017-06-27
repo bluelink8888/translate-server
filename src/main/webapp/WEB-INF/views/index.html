@@ -31,6 +31,7 @@ var xhr = null;
 $("#input").on("keyup", function(){
 	var data = $(this).val();
 	if(data.length !=0 && data.length > 1){
+		console.log(data);
 		goAjax(data);		
 	}else{
 		$("#resultContent").addClass('hidden');
@@ -42,9 +43,19 @@ function goAjax(data){
 		xhr.abort();
 		xhr = null;
 	}
+	
+	var jsonObject = JSON.stringify({
+		target : data,
+		sl : "en",
+		tl : "zh-TW"
+	});
+	
 	xhr = $.ajax({
-		type : "GET",
-		url : "translate/" + data,
+		type : "POST",
+		url : "translate",
+		contentType : "application/json",
+		data : jsonObject,
+		dataType : "json",
 		success : function(res){
 			console.log(res.body.result);
 			$("#resultContent").text(res.body.result);

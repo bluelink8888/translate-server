@@ -6,14 +6,14 @@ public interface TranslateService {
   
   final String encodeType = "UTF-8";
   
-  final String translateLanguage = "zh-TW";
+  final String contenType = "application/json; charset=UTF-8";
   
   /**
    * This method is for get json from google translate server
    * @param target
    * @return
    */
-  TranslateVo getTranslateResult(String target);
+  TranslateVo getTranslateResult(String target, String sl, String tl);
   
   /**
    * This method is for get simple String, and source from google translate json

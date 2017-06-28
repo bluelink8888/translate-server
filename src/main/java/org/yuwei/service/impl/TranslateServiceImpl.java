@@ -15,7 +15,8 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.yuwei.model.TranslateVo;
-import org.yuwei.param.Language;
+import org.yuwei.model.enums.Language;
+import org.yuwei.model.view.TranslateView;
 import org.yuwei.service.TranslateService;
 import org.yuwei.util.TokenImpl;
 
@@ -28,7 +29,7 @@ public class TranslateServiceImpl implements TranslateService{
   private TokenImpl token;
   
   @Override
-  public TranslateVo getTranslateResult(String target, String sl, String tl) {
+  public TranslateVo getTranslateResult(TranslateView translateView) {
     
     String result = "";
     String googleUrl = "";
@@ -39,13 +40,13 @@ public class TranslateServiceImpl implements TranslateService{
      */
     try {
       googleUrl = "https://translate.google.com.tw/translate_a/single?client=t&"
-          + "sl=" + sl + "&" 
-          + "tl=" + tl + "&"  
+          + "sl=" + translateView.getSl() + "&" 
+          + "tl=" + translateView.getTl() + "&"  
           + "hl=" + Language.TRADITIONAL_CHINESE.getValue()
           + "&dt=at&dt=bd&dt=ex&dt=ld&dt=md&dt=qca&dt=rw&dt=rm&dt=ss&dt=t"
           + "&ie=" + encodeType + "&oe=" + encodeType
           + "&swap=1&source=btn&ssel=5&tsel=5&kc=0"
-          + "&tk=" + token.getToken(target) + "&q=" + URLEncoder.encode(target, encodeType);
+          + "&tk=" + token.getToken(translateView.getTarget()) + "&q=" + URLEncoder.encode(translateView.getTarget(), encodeType);
     } catch (UnsupportedEncodingException e1) {
       logger.error(e1);
     }
@@ -74,7 +75,7 @@ public class TranslateServiceImpl implements TranslateService{
     }
     
     TranslateVo translateVo = new TranslateVo();
-    translateVo.setTarget(target);
+    translateVo.setTarget(translateView.getTarget());
     translateVo.setResult(this.getformatResult(result));
     return translateVo;
   }

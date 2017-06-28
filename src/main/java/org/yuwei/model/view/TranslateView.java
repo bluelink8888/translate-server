@@ -1,4 +1,4 @@
-package org.yuwei.model;
+package org.yuwei.model.view;
 
 import java.io.Serializable;
 

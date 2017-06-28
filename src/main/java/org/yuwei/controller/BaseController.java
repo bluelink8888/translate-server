@@ -16,6 +16,13 @@ public class BaseController {
     return new ResponseEntity<>(bj, HttpStatus.OK);
   }
   
+  public <T> ResponseEntity badRequest(){
+    BaseJson bj = new BaseJson();
+    bj.setTime(this.nowTime());
+    bj.setBody("Fail on vaildParam");
+    return new ResponseEntity<>(bj, HttpStatus.BAD_REQUEST);
+  }
+  
   public String nowTime(){
     LocalDateTime now = LocalDateTime.now();
     return now.toString();

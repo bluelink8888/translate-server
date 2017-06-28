@@ -8,7 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.yuwei.config.AppConfig;
-import org.yuwei.param.Language;
+import org.yuwei.model.enums.Language;
+import org.yuwei.model.view.TranslateView;
 import org.yuwei.service.TranslateService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -20,11 +21,11 @@ public class BasicTest {
   
   @Test
   public void testTranslate(){
-    String target = "測試";
-    String result = translateService.getTranslateResult(target, 
-        Language.TRADITIONAL_CHINESE.getValue(), Language.ENGLISH.getValue()).getResult();
-    String except = "test";
-    assertEquals(result, except);
+    TranslateView translateView = new TranslateView(); 
+    translateView.setTarget("測試");
+    translateView.setSl(Language.TRADITIONAL_CHINESE.getValue());
+    translateView.setTl(Language.ENGLISH.getValue());
+    assertEquals(translateService.getTranslateResult(translateView).getResult(), "test");
   }
   
 }

@@ -1,4 +1,4 @@
-package org.yuwei.param;
+package org.yuwei.model.enums;
 
 public enum Language {
 

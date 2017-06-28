@@ -1,6 +1,7 @@
 package org.yuwei.service;
 
 import org.yuwei.model.TranslateVo;
+import org.yuwei.model.view.TranslateView;
 
 public interface TranslateService {
   
@@ -13,7 +14,7 @@ public interface TranslateService {
    * @param target
    * @return
    */
-  TranslateVo getTranslateResult(String target, String sl, String tl);
+  TranslateVo getTranslateResult(TranslateView translateView);
   
   /**
    * This method is for get simple String, and source from google translate json

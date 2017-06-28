@@ -68,7 +68,6 @@ public class TranslateServiceImpl implements TranslateService{
         }
         result = sb.toString();
       }else{
-        // logger.warn("failure");
       }
     } catch (Exception e) {
       logger.error(e);

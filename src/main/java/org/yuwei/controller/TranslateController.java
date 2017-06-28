@@ -49,7 +49,7 @@ public class TranslateController extends BaseController{
       result.setSl(defaultSl);
       result.setTl(defaultTl);
       result.setTarget(translateView.getTarget());
-      logger.info("target : " + result.getTarget() + ", sl : " + result.getSl() + ", tl : " + result.getTl());
+      logger.debug("target : " + result.getTarget() + ", sl : " + result.getSl() + ", tl : " + result.getTl());
     }
     
     return result;

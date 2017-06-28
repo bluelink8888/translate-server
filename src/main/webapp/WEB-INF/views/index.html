@@ -13,11 +13,11 @@
 	</div>
 	<div class="input">
 		<div class="inputText">
-			<textarea id="input" rows="1" placeholder="Please type English"></textarea>
+			<textarea id="input" rows="1" attr-sl="en" attr-tl="zh-TW" placeholder="Please type English"></textarea>
 		</div>
 	</div>
 	<div class="result">
-		<div id="resultContent" class="text-center hidden" style=""></div>
+		<div id="resultContent" class="text-center hidden"></div>
 	</div>
 	<div id="footer" class="text-center">
 		<span>
@@ -28,17 +28,23 @@
 <script type="text/javascript">
 var xhr = null;
 
+$("#resultContent").on('click', function(){
+	$("#input").val('');
+	$(this).addClass('hidden').empty();
+})
+
 $("#input").on("keyup", function(){
 	var data = $(this).val();
+	var slv = $(this).attr("attr-sl");
+	var tlv = $(this).attr("attr-tl");
 	if(data.length !=0 && data.length > 1){
-		console.log(data);
-		goAjax(data);		
+		goAjax(data, slv, tlv);		
 	}else{
 		$("#resultContent").addClass('hidden');
 	}
 })
 
-function goAjax(data){
+function goAjax(data, slv, tlv){
 	if(xhr!=null){
 		xhr.abort();
 		xhr = null;
@@ -46,8 +52,8 @@ function goAjax(data){
 	
 	var jsonObject = JSON.stringify({
 		target : data,
-		sl : "en",
-		tl : "zh-TW"
+		sl : slv,
+		tl : tlv
 	});
 	
 	xhr = $.ajax({
@@ -57,7 +63,6 @@ function goAjax(data){
 		data : jsonObject,
 		dataType : "json",
 		success : function(res){
-			console.log(res.body.result);
 			$("#resultContent").text(res.body.result);
 		},
 		complete : function(){

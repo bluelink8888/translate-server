@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.yuwei.model.view.TranslateView;
 import org.yuwei.service.TranslateService;
 
@@ -19,13 +20,21 @@ public class TranslateController extends BaseController{
   @Autowired
   private TranslateService translateService;
   
+  @RequestMapping(value="translate", method=RequestMethod.GET, produces="application/json")
+  public ResponseEntity<String> getTranslate(@RequestParam(value="t") String t){
+    
+    TranslateView result = this.vaildParam(new TranslateView(t,null,null));
+    return ok(translateService.getTranslateResult(result));
+  }
+  
+  
   /**
    * According user input to translate, only for English to Chinese for now
    * @param translateView
    * @return
    */
   @RequestMapping(value="translate", method=RequestMethod.POST, produces="application/json")
-  public ResponseEntity<String> getUser(@RequestBody TranslateView translateView){
+  public ResponseEntity<String> postTranslate(@RequestBody TranslateView translateView){
     
     TranslateView result = this.vaildParam(translateView);
     if(result!=null){
@@ -39,19 +48,15 @@ public class TranslateController extends BaseController{
     String defaultSl="en", defaultTl = "zh-TW";
     TranslateView result = null;
     if(translateView.getTarget()!=null){
-      result = new TranslateView();
       if(translateView.getSl()!=null){
         defaultSl = translateView.getSl();
       }
       if(translateView.getTl()!=null){
         defaultTl = translateView.getTl();
       }
-      result.setSl(defaultSl);
-      result.setTl(defaultTl);
-      result.setTarget(translateView.getTarget());
+      result = new TranslateView(translateView.getTarget(), defaultSl, defaultTl);
       logger.debug("target : " + result.getTarget() + ", sl : " + result.getSl() + ", tl : " + result.getTl());
     }
-    
     return result;
   }
   

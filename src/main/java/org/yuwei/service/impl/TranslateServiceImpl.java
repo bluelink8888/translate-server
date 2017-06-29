@@ -2,7 +2,6 @@ package org.yuwei.service.impl;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
 import org.apache.http.HttpEntity;
@@ -47,8 +46,8 @@ public class TranslateServiceImpl implements TranslateService{
           + "&ie=" + encodeType + "&oe=" + encodeType
           + "&swap=1&source=btn&ssel=5&tsel=5&kc=0"
           + "&tk=" + token.getToken(translateView.getTarget()) + "&q=" + URLEncoder.encode(translateView.getTarget(), encodeType);
-    } catch (UnsupportedEncodingException e1) {
-      logger.error(e1);
+    } catch (Exception e) {
+      logger.error("Error : " + e);
     }
     
     HttpClient client = HttpClientBuilder.create().build();
@@ -70,7 +69,7 @@ public class TranslateServiceImpl implements TranslateService{
       }else{
       }
     } catch (Exception e) {
-      logger.error(e);
+      logger.error("Error : " + e);
     }
     
     TranslateVo translateVo = new TranslateVo();
@@ -86,7 +85,6 @@ public class TranslateServiceImpl implements TranslateService{
       // i know this is a stupid way to get first one result, hope one day can get better idea
       result = result.substring(4, (result.indexOf(",")-1));
     }
-    
     return result;
   }
 

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.http.client.ClientProtocolException;
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Component;
 
 /**
@@ -15,6 +16,8 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class TokenImpl extends Token {
+  
+  private final static Logger logger = Logger.getLogger(TokenImpl.class);
 
   public TokenImpl() throws ClientProtocolException, IOException {
     super();
@@ -25,7 +28,7 @@ public class TokenImpl extends Token {
    */
   @Override
   public String getToken(String t) {
-
+    String result = "";
     List<Long> tkArray = this.getTkArray();
     List<Integer> f = new ArrayList<Integer>();
 
@@ -68,8 +71,10 @@ public class TokenImpl extends Token {
       a = ((a & 2147483647L) + 2147483648L);
     }
     a %= 1E6;
-
-    return a + "." + (a ^ tkk1);
+    
+    result = a + "." + (a ^ tkk1);
+    logger.debug("tk : " + result);
+    return result;
   }
 
   private long zp(long a, String b) {

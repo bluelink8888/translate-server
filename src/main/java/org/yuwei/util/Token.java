@@ -13,6 +13,7 @@ import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.log4j.Logger;
 
 /**
  * This for have get token needed
@@ -20,6 +21,8 @@ import org.apache.http.impl.client.HttpClientBuilder;
  *
  */
 public abstract class Token {
+
+  private final static Logger logger = Logger.getLogger(Token.class);
 
   // google translate page url
   private String googleUrl = "https://translate.google.com.tw/";
@@ -61,7 +64,7 @@ public abstract class Token {
       tkk = target.substring(target.indexOf("TKK="),
           target.indexOf("WEB_TRANSLATION_PATH") - 1);
     } else {
-      System.out.println("failure");
+      logger.warn("Fail to crawler google param ");
     }
 
     String[] tkks = tkk.split(";");
@@ -79,7 +82,7 @@ public abstract class Token {
         result.add(temp);
       }
     }
-
+    logger.debug("google param : " + result);
     return result;
   }
 

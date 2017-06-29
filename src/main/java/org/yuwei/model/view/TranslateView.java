@@ -14,6 +14,12 @@ public class TranslateView implements Serializable {
   private String tl;
   
   private String target;
+  
+  public TranslateView(String target, String sl, String tl){
+    this.target = target;
+    this.sl = sl;
+    this.tl = tl;
+  }
 
   public String getSl() {
     return sl;

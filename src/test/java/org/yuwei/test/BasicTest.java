@@ -32,8 +32,10 @@ public class BasicTest {
    */
   @Test
   public void testTranslate() {
-    TranslateView translateView = new TranslateView("測試",
-        Language.TRADITIONAL_CHINESE.getValue(), Language.ENGLISH.getValue());
+    TranslateView translateView = new TranslateView();
+    translateView.setTarget("測試");
+    translateView.setSl(Language.TRADITIONAL_CHINESE.getValue());
+    translateView.setTl(Language.ENGLISH.getValue());
     assertEquals(
         translateService.getTranslateResult(translateView).getResult(), "test");
   }

@@ -22,8 +22,10 @@ public class TranslateController extends BaseController{
   
   @RequestMapping(value="translate", method=RequestMethod.GET, produces="application/json")
   public ResponseEntity<String> getTranslate(@RequestParam(value="t") String t){
-    
-    TranslateView result = this.vaildParam(new TranslateView(t,null,null));
+
+    TranslateView view = new TranslateView();
+    view.setTarget(t);
+    TranslateView result = this.vaildParam(view);
     return ok(translateService.getTranslateResult(result));
   }
   
@@ -54,7 +56,10 @@ public class TranslateController extends BaseController{
       if(translateView.getTl()!=null){
         defaultTl = translateView.getTl();
       }
-      result = new TranslateView(translateView.getTarget(), defaultSl, defaultTl);
+      result = new TranslateView();
+      result.setTarget(translateView.getTarget());
+      result.setSl(defaultSl);
+      result.setTl(defaultTl);
       logger.debug("target : " + result.getTarget() + ", sl : " + result.getSl() + ", tl : " + result.getTl());
     }
     return result;

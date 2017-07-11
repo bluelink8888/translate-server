@@ -47,8 +47,18 @@ body {
 	height: 200px;
 }
 
+.switchImg {
+	background-image: url(../../static/img/switch.png);
+	opacity: 0.5;
+	margin: 0 auto;
+	margin-top: 15px;
+	width: 40px;
+	height: 40px;
+	background-size: cover;
+}
+
 .input {
-	padding-top: 30px;
+	padding-top: 15px;
 	margin: 0 auto;
 }
 

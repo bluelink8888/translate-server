@@ -11,7 +11,7 @@
 <div class="container">
 	<div class="logo">
 		<div class="logoImg"></div>
-		<div class="switchImg"></div>
+		<div id="switchLang" class="switchImg"></div>
 	</div>
 	<div class="input">
 		<div class="inputText">
@@ -29,9 +29,28 @@
 </div>
 <script type="text/javascript">
 new Clipboard('#resultContent');
-
 var xhr = null;
+var eng = "en";
+var cht = "zh-TW";
 
+// switch langurage
+$("#switchLang").on('click', function(){
+	var input = $("#input");
+	
+	var slv = input.attr("attr-sl");
+	var tlv = input.attr("attr-tl");
+	if(slv == eng){
+		input.attr("attr-sl", cht);
+		input.attr("attr-tl", eng);
+		input.attr("placeholder", "Please type Chinese");
+	}else{
+		input.attr("attr-sl", eng);
+		input.attr("attr-tl", cht);
+		input.attr("placeholder", "Please type English");
+	}	
+})
+
+// empty result 
 $("#resultContent").on('click', function(){
 	$("#input").val('');
 	$(this).addClass('hidden').empty();

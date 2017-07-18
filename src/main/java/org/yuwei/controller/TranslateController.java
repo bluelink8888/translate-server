@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.yuwei.model.enums.Language;
 import org.yuwei.model.view.TranslateView;
 import org.yuwei.service.TranslateService;
 
@@ -21,14 +22,13 @@ public class TranslateController extends BaseController{
   private TranslateService translateService;
   
   @RequestMapping(value="translate", method=RequestMethod.GET, produces="application/json")
-  public ResponseEntity<String> getTranslate(@RequestParam(value="t") String t){
-
+  public ResponseEntity<String> getTranslate(@RequestParam(value="t") String t, 
+      @RequestParam(value="sl", required = false) String sl, @RequestParam(value="tl", required = false) String tl){
     TranslateView view = new TranslateView();
-    view.setTarget(t);
+    view.setTarget(t);  view.setSl(sl); view.setTl(tl);
     TranslateView result = this.vaildParam(view);
     return ok(translateService.getTranslateResult(result));
   }
-  
   
   /**
    * According user input to translate, only for English to Chinese for now
@@ -47,7 +47,7 @@ public class TranslateController extends BaseController{
   }
   
   private TranslateView vaildParam(TranslateView translateView){
-    String defaultSl="en", defaultTl = "zh-TW";
+    String defaultSl=Language.ENGLISH.getValue(), defaultTl = Language.TRADITIONAL_CHINESE.getValue();
     TranslateView result = null;
     if(translateView.getTarget()!=null){
       if(translateView.getSl()!=null){

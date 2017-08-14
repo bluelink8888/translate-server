@@ -3,6 +3,9 @@ package org.yuwei.test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
+import java.io.File;
+import java.net.URL;
+
 import org.apache.log4j.Logger;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -39,6 +42,21 @@ public class BasicTest {
     assertEquals(
         translateService.getTranslateResult(translateView).getResult(), "test");
   }
+  
+  @Test
+  public void testTranslateFile(){
+    try {
+      URL url = this.getClass().getClassLoader().getResource("test.txt");
+      if(new File(url.getFile()).exists()){
+        assertEquals(translateService.getTranslateFileResult(url.getFile()), "測試");
+      }else{
+        logger.info("test not exist");
+      }
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+  }
+  
 
   /**
    * check get google token in crawler way

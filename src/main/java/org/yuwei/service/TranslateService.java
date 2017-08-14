@@ -9,6 +9,8 @@ public interface TranslateService {
   
   final String contenType = "application/json; charset=UTF-8";
   
+  final String fileUrl = "https://translate.googleusercontent.com/translate_f";
+  
   /**
    * This method is for get json from google translate server
    * @param target
@@ -23,5 +25,7 @@ public interface TranslateService {
    * @return
    */
   String getformatResult(String result);
+  
+  String getTranslateFileResult(String path);
   
 }

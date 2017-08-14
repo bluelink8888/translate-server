@@ -1,14 +1,28 @@
 package org.yuwei.service.impl;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 
+import javax.xml.ws.RespectBinding;
+
+import org.apache.http.Header;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.ResponseHandler;
+import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.ContentType;
+import org.apache.http.entity.mime.HttpMultipartMode;
+import org.apache.http.entity.mime.MultipartEntityBuilder;
+import org.apache.http.impl.client.BasicResponseHandler;
+import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,7 +64,7 @@ public class TranslateServiceImpl implements TranslateService{
       logger.error("Error : " + e);
     }
     
-    HttpClient client = HttpClientBuilder.create().build();
+    CloseableHttpClient client = HttpClientBuilder.create().build();
     HttpGet req = new HttpGet(googleUrl);
 
     try {
@@ -58,24 +72,23 @@ public class TranslateServiceImpl implements TranslateService{
       resp.addHeader("Content-Type", contenType);
       if (resp.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
         HttpEntity entity = resp.getEntity();
-        BufferedReader bf = new BufferedReader(new InputStreamReader(
-            entity.getContent()));
+        BufferedReader bf = new BufferedReader(new InputStreamReader(entity.getContent()));
         StringBuffer sb = new StringBuffer();
         String line = "";
         while ((line = bf.readLine()) != null) {
           sb.append(line);
         }
-        result = sb.toString();
+        result = this.getformatResult(sb.toString());
       }else{
       }
-      
+      client.close();
     } catch (Exception e) {
       logger.error("Error : " + e);
     }
     
     TranslateVo translateVo = new TranslateVo();
     translateVo.setTarget(translateView.getTarget());
-    translateVo.setResult(this.getformatResult(result));
+    translateVo.setResult(result);
     return translateVo;
   }
 
@@ -85,6 +98,38 @@ public class TranslateServiceImpl implements TranslateService{
     if(result !=null && result.length()!= 0){
       // i know this is a stupid way to get first one result, hope one day can get better idea
       result = result.substring(4, (result.indexOf(",")-1));
+    }
+    return result;
+  }
+
+  @Override
+  public String getTranslateFileResult(String path) {
+    String result = "";
+    try {
+      CloseableHttpClient client = HttpClientBuilder.create().build();
+      HttpPost post = new HttpPost(fileUrl);
+      
+      File file = new File(path);
+      
+      HttpEntity entity = MultipartEntityBuilder.create()
+          .setMode(HttpMultipartMode.BROWSER_COMPATIBLE)
+          .addTextBody("sl", "en")
+          .addTextBody("tl", "zh-TW")
+          .addTextBody("hl", "en")
+          .addTextBody("js", "y")
+          .addTextBody("ie", encodeType)
+          .addTextBody("prev", "_t")
+          .addBinaryBody("file", file, ContentType.DEFAULT_BINARY, file.getName())
+          .build();
+      
+      post.setEntity(entity);
+      
+      ResponseHandler<String> respHandler = new BasicResponseHandler();
+      CloseableHttpResponse resp = client.execute(post);
+      result = respHandler.handleResponse(resp).replace("<pre>", "").replace("</pre>", "");
+      client.close();
+    } catch (Exception e) {
+      e.printStackTrace();
     }
     return result;
   }

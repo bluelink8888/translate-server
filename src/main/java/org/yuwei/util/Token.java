@@ -7,11 +7,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.log4j.Logger;
 
@@ -44,12 +44,12 @@ public abstract class Token {
   private List<Long> getGoogleArray() throws ClientProtocolException,
       IOException {
 
-    HttpClient client = HttpClientBuilder.create().build();
+    CloseableHttpClient client = HttpClientBuilder.create().build();
     HttpGet req = new HttpGet(googleUrl);
 
     String tkk = null;
 
-    HttpResponse resp = client.execute(req);
+    CloseableHttpResponse resp = client.execute(req);
     if (resp.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
       HttpEntity entity = resp.getEntity();
       BufferedReader bf = new BufferedReader(new InputStreamReader(
@@ -66,7 +66,8 @@ public abstract class Token {
     } else {
       logger.warn("Fail to crawler google param ");
     }
-
+    client.close();
+    
     String[] tkks = tkk.split(";");
 
     List<Long> result = new ArrayList<Long>();

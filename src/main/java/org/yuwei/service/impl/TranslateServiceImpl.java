@@ -77,7 +77,7 @@ public class TranslateServiceImpl implements TranslateService{
       }
       client.close();
     } catch (Exception e) {
-      logger.error("Error : " + e);
+      logger.error("Translate Error : " + e);
     }
     
     TranslateVo translateVo = new TranslateVo();
@@ -120,10 +120,10 @@ public class TranslateServiceImpl implements TranslateService{
       
       ResponseHandler<String> respHandler = new BasicResponseHandler();
       CloseableHttpResponse resp = client.execute(post);
-      result = respHandler.handleResponse(resp).replace("<pre>", "").replace("</pre>", "");
+      result = respHandler.handleResponse(resp).replace("<pre>", "").replace("</pre>", ""); // get content from google translate result
       client.close();
     } catch (Exception e) {
-      e.printStackTrace();
+      logger.error("Translate File Error : " + e);
     }
     return result;
   }

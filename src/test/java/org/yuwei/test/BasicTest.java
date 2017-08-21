@@ -59,7 +59,6 @@ public class BasicTest {
       e.printStackTrace();
     }
   }
-  
 
   /**
    * check get google token in crawler way
@@ -68,5 +67,4 @@ public class BasicTest {
   public void testToken() {
     assertNotNull(token.getToken("test"));
   }
-
 }

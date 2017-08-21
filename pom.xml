@@ -23,6 +23,8 @@
     <apache.version.httpClient>4.5.2</apache.version.httpClient>
     <!-- jackson lib -->
     <jackson.databind>2.9.0</jackson.databind>
+    <!-- jsoup lib version -->
+    <jsoup.version>1.10.3</jsoup.version>
   </properties>
   <dependencies>
     <!-- for log -->
@@ -92,6 +94,12 @@
       <groupId>org.apache.httpcomponents</groupId>
       <artifactId>httpmime</artifactId>
       <version>${apache.version.httpClient}</version>
+    </dependency>
+    <!-- jsoup -->
+    <dependency>
+      <groupId>org.jsoup</groupId>
+      <artifactId>jsoup</artifactId>
+      <version>${jsoup.version}</version>
     </dependency>
   </dependencies>
   <build>

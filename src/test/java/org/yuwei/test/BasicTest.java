@@ -43,6 +43,9 @@ public class BasicTest {
         translateService.getTranslateResult(translateView).getResult(), "test");
   }
   
+  /**
+   * test translate file feature
+   */
   @Test
   public void testTranslateFile(){
     try {

@@ -26,6 +26,11 @@ public interface TranslateService {
    */
   String getformatResult(String result);
   
+  /**
+   * This method is for get file translate from google translate server
+   * @param path
+   * @return
+   */
   String getTranslateFileResult(String path);
   
 }

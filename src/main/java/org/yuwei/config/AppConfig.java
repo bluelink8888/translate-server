@@ -11,7 +11,7 @@ import org.yuwei.schedule.impl.ServerScheduleImpl;
 
 @EnableScheduling
 @Configuration
-@ComponentScan(basePackages = {"org.yuwei.service", "org.yuwei.util"})
+@ComponentScan(basePackages = {"org.yuwei.service", "org.yuwei.util", "org.yuwei.crawler"})
 @PropertySources(
     @PropertySource("classpath:config.properties")
     )

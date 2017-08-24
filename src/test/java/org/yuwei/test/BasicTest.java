@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.yuwei.config.AppConfig;
+import org.yuwei.crawler.NyTimesCrawler;
 import org.yuwei.model.enums.Language;
 import org.yuwei.model.view.TranslateView;
 import org.yuwei.service.TranslateService;
@@ -26,6 +27,9 @@ public class BasicTest {
 
   @Autowired
   private TranslateService translateService;
+  
+  @Autowired
+  private NyTimesCrawler nyTimesCrawler;
 
   @Autowired
   private TokenImpl token;
@@ -58,6 +62,11 @@ public class BasicTest {
     } catch (Exception e) {
       e.printStackTrace();
     }
+  }
+  
+  @Test
+  public void crawlerTest(){
+    nyTimesCrawler.getArticleLinks();
   }
 
   /**

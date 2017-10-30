@@ -27,6 +27,12 @@
     <jsoup.version>1.10.3</jsoup.version>
   </properties>
   <dependencies>
+    <!-- https://mvnrepository.com/artifact/com.github.bluelink8888/google-translate -->
+    <dependency>
+      <groupId>com.github.bluelink8888</groupId>
+      <artifactId>google-translate</artifactId>
+      <version>v0.1</version>
+    </dependency>
     <!-- for log -->
     <dependency>
       <groupId>log4j</groupId>

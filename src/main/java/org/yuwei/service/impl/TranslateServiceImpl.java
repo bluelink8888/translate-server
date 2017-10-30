@@ -25,7 +25,8 @@ import org.yuwei.model.TranslateVo;
 import org.yuwei.model.enums.Language;
 import org.yuwei.model.view.TranslateView;
 import org.yuwei.service.TranslateService;
-import org.yuwei.util.TokenImpl;
+
+import com.github.bluelink8888.translate.Token;
 
 @Service
 public class TranslateServiceImpl implements TranslateService{
@@ -33,7 +34,7 @@ public class TranslateServiceImpl implements TranslateService{
   private final static Logger logger = Logger.getLogger(TranslateServiceImpl.class);
 
   @Autowired
-  private TokenImpl token;
+  private Token token;
   
   @Override
   public TranslateVo getTranslateResult(TranslateView translateView) {

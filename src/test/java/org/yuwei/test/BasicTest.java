@@ -13,7 +13,8 @@ import org.yuwei.config.AppConfig;
 import org.yuwei.model.enums.Language;
 import org.yuwei.model.view.TranslateView;
 import org.yuwei.service.TranslateService;
-import org.yuwei.util.TokenImpl;
+
+import com.github.bluelink8888.translate.Token;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = { AppConfig.class })
@@ -25,7 +26,7 @@ public class BasicTest {
   private TranslateService translateService;
 
   @Autowired
-  private TokenImpl token;
+  private Token token;
 
   /**
    * check translate result

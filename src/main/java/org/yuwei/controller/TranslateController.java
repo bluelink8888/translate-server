@@ -8,9 +8,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.yuwei.model.enums.Language;
+import org.yuwei.model.bean.TranslateBean;
 import org.yuwei.model.view.TranslateView;
 import org.yuwei.service.TranslateService;
+
+import com.github.bluelink8888.constant.Language;
 
 @Controller
 @RequestMapping("/")
@@ -26,7 +28,7 @@ public class TranslateController extends BaseController{
       @RequestParam(value="sl", required = false) String sl, @RequestParam(value="tl", required = false) String tl){
     TranslateView view = new TranslateView();
     view.setTarget(t);  view.setSl(sl); view.setTl(tl);
-    TranslateView result = this.vaildParam(view);
+    TranslateBean result = this.vaildParam(view);
     return ok(translateService.getTranslateResult(result));
   }
   
@@ -38,7 +40,7 @@ public class TranslateController extends BaseController{
   @RequestMapping(value="translate", method=RequestMethod.POST, produces="application/json")
   public ResponseEntity<String> postTranslate(@RequestBody TranslateView translateView){
     
-    TranslateView result = this.vaildParam(translateView);
+    TranslateBean result = this.vaildParam(translateView);
     if(result!=null){
       return ok(translateService.getTranslateResult(result));
     }else{
@@ -46,17 +48,28 @@ public class TranslateController extends BaseController{
     }
   }
   
-  private TranslateView vaildParam(TranslateView translateView){
-    String defaultSl=Language.ENGLISH.getValue(), defaultTl = Language.TRADITIONAL_CHINESE.getValue();
-    TranslateView result = null;
+  private TranslateBean vaildParam(TranslateView translateView){
+    Language defaultSl=Language.ENGLISH, defaultTl = Language.TRADITIONAL_CHINESE;
+    TranslateBean result = null;
     if(translateView.getTarget()!=null){
+      // check want translate String is not null
       if(translateView.getSl()!=null){
-        defaultSl = translateView.getSl();
+        for(Language lang : Language.values()){
+          if(lang.getValue().equals(translateView.getSl())){
+            // vaild param is expected
+            defaultSl = lang;
+          }
+        }
       }
       if(translateView.getTl()!=null){
-        defaultTl = translateView.getTl();
+        for(Language lang : Language.values()){
+          if(lang.getValue().equals(translateView.getTl())){
+            // vaild param is expected
+            defaultTl = lang;
+          }
+        }
       }
-      result = new TranslateView();
+      result = new TranslateBean();
       result.setTarget(translateView.getTarget());
       result.setSl(defaultSl);
       result.setTl(defaultTl);

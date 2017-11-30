@@ -1,16 +1,12 @@
 package org.yuwei.schedule.impl;
 
-import java.time.LocalDateTime;
-
 import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
-import org.yuwei.model.TranslateVo;
-import org.yuwei.model.enums.Language;
-import org.yuwei.model.view.TranslateView;
 import org.yuwei.schedule.ServerSchedule;
-import org.yuwei.service.TranslateService;
+
+import com.github.bluelink8888.constant.Language;
+import com.github.bluelink8888.translate.impl.TranslateImpl;
 
 
 public class ServerScheduleImpl implements ServerSchedule{
@@ -23,23 +19,15 @@ public class ServerScheduleImpl implements ServerSchedule{
   @Value("${test.expect}")
   private String testExpect;
   
-  @Autowired
-  private TranslateService translateService;
-
   @Scheduled(cron="${test.cron}")
   @Override
   public void translateCheck() {
-    LocalDateTime currentPoint = LocalDateTime.now();
-    logger.debug("time : " + currentPoint);
-    TranslateView view = new TranslateView();
-    view.setTarget(testTarget);
-    view.setSl(Language.ENGLISH.getValue());
-    view.setTl(Language.TRADITIONAL_CHINESE.getValue());
-    TranslateVo result = translateService.getTranslateResult(view);
-    if(testExpect.equals(result.getResult())){
+    TranslateImpl.create();
+    String result = TranslateImpl.create().translate(testTarget, Language.ENGLISH, Language.TRADITIONAL_CHINESE);
+    if(testExpect.equals(result)){
       logger.info("translate success");
     }else{
-      logger.info("translate failure");
+      logger.warn("translate failure");
     }
   }
 }

@@ -22,7 +22,6 @@ public class ServerScheduleImpl implements ServerSchedule{
   @Scheduled(cron="${test.cron}")
   @Override
   public void translateCheck() {
-    TranslateImpl.create();
     String result = TranslateImpl.create().translate(testTarget, Language.ENGLISH, Language.TRADITIONAL_CHINESE);
     if(testExpect.equals(result)){
       logger.info("translate success");

@@ -24,6 +24,11 @@ public class AppConfig {
   
   private static Logger logger = Logger.getLogger(AppConfig.class);
   
+  @Bean
+  public Token tokenImpl(){
+    return new TokenImpl();
+  }
+  
   // schedule job 
   @Bean
   public ServerSchedule translateSchedule(){

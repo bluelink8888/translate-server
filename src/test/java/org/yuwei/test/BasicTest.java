@@ -10,10 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.yuwei.config.AppConfig;
-import org.yuwei.model.enums.Language;
-import org.yuwei.model.view.TranslateView;
+import org.yuwei.model.bean.TranslateBean;
 import org.yuwei.service.TranslateService;
 
+import com.github.bluelink8888.constant.Language;
 import com.github.bluelink8888.translate.Token;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -33,12 +33,12 @@ public class BasicTest {
    */
   @Test
   public void testTranslate() {
-    TranslateView translateView = new TranslateView();
-    translateView.setTarget("測試");
-    translateView.setSl(Language.TRADITIONAL_CHINESE.getValue());
-    translateView.setTl(Language.ENGLISH.getValue());
+    TranslateBean translateBean = new TranslateBean();
+    translateBean.setTarget("測試");
+    translateBean.setSl(Language.TRADITIONAL_CHINESE);
+    translateBean.setTl(Language.ENGLISH);
     assertEquals(
-        translateService.getTranslateResult(translateView).getResult(), "test");
+        translateService.getTranslateResult(translateBean).getResult(), "test");
   }
 
   /**

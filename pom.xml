@@ -22,14 +22,14 @@
     <!-- apache lib version -->
     <apache.version.httpClient>4.5.2</apache.version.httpClient>
     <!-- jackson lib -->
-    <jackson.databind>2.9.7</jackson.databind>
+    <jackson.databind>2.9.8</jackson.databind>
   </properties>
   <dependencies>
     <!-- https://mvnrepository.com/artifact/com.github.bluelink8888/google-translate -->
     <dependency>
       <groupId>com.github.bluelink8888</groupId>
       <artifactId>google-translate</artifactId>
-      <version>1.0.4</version>
+      <version>1.0.5</version>
     </dependency>
     <!-- for log -->
     <dependency>
